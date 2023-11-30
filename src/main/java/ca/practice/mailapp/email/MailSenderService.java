@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class MailSenderService {
@@ -33,6 +34,25 @@ public class MailSenderService {
     public void saveEmail(Email email) {
         System.out.println("Recording email to database");
         emailRepository.save(email);
+    }
+
+    public List<Email> getAllEmails() {
+        return (List<Email>) emailRepository.findAll();
+    }
+
+    public List<Email> findEmailByParameters(EmailSearchParameters emailSearchParameters) {
+        List<Email> resultList = null;
+
+        String recipient = emailSearchParameters.getRecipient();
+        String subject = emailSearchParameters.getSubject();
+
+        if (recipient != null) {
+            resultList = emailRepository.findByRecipient(recipient);
+        } else if (subject != null) {
+            resultList = emailRepository.findBySubject(subject);
+        }
+
+        return resultList;
     }
 
 }
