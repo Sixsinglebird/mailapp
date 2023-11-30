@@ -6,7 +6,7 @@ import java.util.List;
 
 @Repository
 public interface EmailRepository extends CrudRepository<Email, Long> {
-    public List<Email> findByTo(String to);
+    public List<Email> findByRecipient(String to);
 
     public List<Email> findBySubject(String subject);
 

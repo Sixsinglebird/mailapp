@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
+import org.springframework.beans.factory.annotation.Value;
 
 @Entity
 public class Email {
@@ -12,8 +13,10 @@ public class Email {
     @SequenceGenerator(name = "email_sequence", sequenceName = "email_sequence", allocationSize = 1, initialValue=1)
     @GeneratedValue(generator = "email_sequence")
     private long id;
-    private String from;
-    private String to;
+
+    @Value("${spring.mail.username}")
+    private String origin;
+    private String recipient;
     private String subject;
     private String body;
 
@@ -25,12 +28,12 @@ public class Email {
         this.id = id;
     }
 
-    public String getTo() {
-        return to;
+    public String getRecipient() {
+        return recipient;
     }
 
-    public void setTo(String to) {
-        this.to = to;
+    public void setRecipient(String recipient) {
+        this.recipient = recipient;
     }
 
     public String getSubject() {
@@ -49,11 +52,11 @@ public class Email {
         this.body = body;
     }
 
-    public String getFrom() {
-        return from;
+    public String getOrigin() {
+        return origin;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public void setOrigin(String origin) {
+        this.origin = origin;
     }
 }
