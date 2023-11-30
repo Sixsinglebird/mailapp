@@ -15,6 +15,7 @@ public class EmailController {
 
     @PostMapping("/email")
     public void sendEmail(@RequestBody Email email) {
+        mailSenderService.saveEmail(email);
         mailSenderService.sendEmail(email);
     }
 }
